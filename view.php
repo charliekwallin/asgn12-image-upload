@@ -1,4 +1,7 @@
-<?php require_once 'initialize.php'; ?>
+<?php 
+require_once 'initialize.php';
+$images = UploadImage::find_all();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,13 +13,10 @@
 <body>
     <a href="index.php">&#8592;</a>
     <?php
-    $result = UploadImage::find_all();
-    $row = $result->fetch_assoc();
-    $result->free();
-    
+        foreach($images as $image) {
+           echo "<img src=\"uploaded-images/$image->image_url\">";
+        }
     ?>
-       
-    <img src="uploaded-images/<?= $row['image_url']; ?>">
        
 </body>
 </html>

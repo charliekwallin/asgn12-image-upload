@@ -2,6 +2,8 @@
 
 class UploadImage {
 
+    public $image_url;
+    
     // start of active record code
 
     static public $database;
@@ -16,7 +18,24 @@ class UploadImage {
         if(!$result) {
             exit("Database query failed.");
         }
-        return $result;
+        // convert the results into objects
+        $objectArray = [];
+        while($record = $result->fetch_assoc()) {
+            $objectArray[] = self::instantiate($record);
+        }
+        $result->free();
+        return $objectArray;
+    }
+
+    static protected function instantiate($record) {
+        $object = new self;
+        // could manually do this, but this method is cooler
+        foreach($record as $property=>$value) {
+            if(property_exists($object, $property)) {
+                $object->$property = $value;
+            }
+        }
+        return $object;
     }
 
     static public function find_all() {
@@ -24,5 +43,6 @@ class UploadImage {
         return self::find_by_sql($sql);
     }
 
+    // End of Active Record 
 
 }
