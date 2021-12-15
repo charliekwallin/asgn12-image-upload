@@ -1,4 +1,4 @@
-<?php //require_once 'initialize.php'; ?>
+<?php require_once 'initialize.php'; ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,20 +10,14 @@
 <body>
     <a href="index.php">&#8592;</a>
     <?php
-        require_once 'db-functions.php';
-        require_once 'db-credentials.php';
-        $database = db_connect();
-
-        $sql = "SELECT * FROM images ORDER BY id DESC";
-        $result = $database->query($sql);
-
-        if(mysqli_num_rows($result) > 0) {
-            while($images = mysqli_fetch_assoc($result)) { ?>
-                <div class="alb">
-                    <img src="uploaded-images/<?= $images['image_url'] ?>">
-                </div>
-            <?php }
-        } 
+    $sql = "SELECT * FROM images ORDER BY id DESC";
+    $result = $database->query($sql);
+    $row = $result->fetch_assoc();
+    $result->free();
+    
     ?>
+        
+    <img src="uploaded-images/<?= $row['image_url']; ?>">
+       
 </body>
 </html>
