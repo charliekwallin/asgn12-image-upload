@@ -11,12 +11,12 @@
     <a href="index.php">&#8592;</a>
     <?php
     $sql = "SELECT * FROM images ORDER BY id DESC";
-    $result = $database->query($sql);
+    $result = UploadImage::$database->query($sql);
     $row = $result->fetch_assoc();
     $result->free();
     
     ?>
-        
+       
     <img src="uploaded-images/<?= $row['image_url']; ?>">
        
 </body>
